@@ -116,10 +116,11 @@ $total_client = mysqli_num_rows($queryData);
                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                       </svg></a>
                   </td>
-                  <td><button type="button" class="btn btn-primary btn-actividad mx-4" onclick="FbotonOn(this)" data-id="<?= $row['indent'] ?>">Disponible</button>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-actividad" onclick="FbotonOn(this)" data-id="<?= $row['indent'] ?>">Disponible</button>
+                    <button type="button" class="btn btn-warning btn-actividad " onclick="Fpuase(this)" data-id="<?= $row['indent'] ?>">Pusar</button>
+                    <button type="button" class="btn btn-danger" onclick="reiniciar(this, <?= $row['indent'] ?>)">Reiniciar</button>
 
-
-                    <button type="button" class="btn btn-danger" onclick="reiniciar(this)">Reiniciar</button>
                   </td>
                   <td>
                     <span class="form-control" type="text" aria-label="readonly input example" data-id="<?= $row['indent'] ?>" id="iniciarCronometro_<?= $row['indent'] ?>" readonly>

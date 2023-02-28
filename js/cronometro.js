@@ -1,4 +1,5 @@
 var estadoBoton = 0;
+var intervalo; // definir intervalo como una variable global
 
 function FbotonOn(btn) {
   var idUsuario = $(btn).data("id");
@@ -13,11 +14,7 @@ function FbotonOn(btn) {
     // Establecer startTime en el momento actual
     startTime = Date.now();
 
-    // Hacer solicitud AJAX a PHP para registrar la actividad
-    // $.post('registro_actividad.php', { id_usuario: idUsuario, estado: 'laborando' });
-
     if ($(btn).text("Laborando")) {
-      var intervalo;
       btn.textContent = "Laborando";
       intervalo = setInterval(function () {
         var currentTime = Date.now();
@@ -32,43 +29,21 @@ function FbotonOn(btn) {
         var tiempo = `${horas.toString().padStart(2, "0")}:${minutos
           .toString()
           .padStart(2, "0")}:${segundos.toString().padStart(2, "0")}`;
-        document.getElementById("iniciarCronometro_" + idUsuario).textContent =
-          tiempo;
+        var cronometro = (document.getElementById(
+          "iniciarCronometro_" + idUsuario
+        ).textContent = tiempo);
 
-        if (tiempoTranscurrido >= 600000) {
-          document.getElementById("iniciarCronometro_"+ idUsuario).style.color = "red";
+        if (cronometro) {
+          cronometro.textContent = tiempo;
+          if (tiempoTranscurrido >= 600000) {
+            cronometro.style.color = "red";
+          }
         }
       }, 1000);
+    }else {
+      btn.textContent = "Laborando";
+      document.getElementById("botonOn").style.backgroundColor = "#138D75";
     }
-  } else {
-    // Cambiar texto y color del botón
-    $(btn).text("Disponible");
-    $(btn).css("background-color", "");
-
-    if ($(btn).text("Disponible")) {
-      document.getElementById("reinicarCronometro")
-        .addEventListener("click", function () {
-          clearInterval(intervalo);
-          var cronometro = document.querySelector("#iniciarCronometro_" + idUsuario);
-          if (cronometro) {
-            cronometro.textContent = "00:00:00";
-            cronometro.style.color = "black";
-          }
-        });
-    }
-
-    // Hacer solicitud AJAX a PHP para registrar la actividad
-    // $.post('registro_actividad.php', { id_usuario: idUsuario, estado: 'disponible' });
-  }
+  } 
 }
 
-document
-  .getElementById("reinicarCronometro")
-  .addEventListener("click", function () {
-    clearInterval(intervalo);
-    var cronometro = document.querySelector("#iniciarCronometro_" + indent);
-    if (cronometro) {
-      cronometro.textContent = "00:00:00";
-      cronometro.style.color = "black";
-    }
-  });
