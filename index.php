@@ -118,7 +118,7 @@ $total_client = mysqli_num_rows($queryData);
                   </td>
                   <td>
                     <button type="button" class="btn btn-primary btn-actividad" onclick="FbotonOn(this)" data-id="<?= $row['indent'] ?>">Disponible</button>
-                    <button type="button" class="btn btn-warning btn-actividad " onclick="Fpuase(this)" data-id="<?= $row['indent'] ?>">Pusar</button>
+                    <!-- <button type="button" class="btn btn-warning btn-actividad " onclick="Fpuase(this)" data-id="<?= $row['indent'] ?>">Pusar</button> -->
                     <button type="button" class="btn btn-danger" onclick="reiniciar(this, <?= $row['indent'] ?>)">Reiniciar</button>
 
                   </td>

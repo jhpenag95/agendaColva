@@ -1,49 +1,40 @@
-var estadoBoton = 0;
-var intervalo; // definir intervalo como una variable global
+var intervalos = {};
 
 function FbotonOn(btn) {
-  var idUsuario = $(btn).data("id");
-  var startTime;
-
   if ($(btn).text() == "Disponible") {
-    // Cambiar texto y color del botón
-    $(btn).text("Laborando");
-    $(btn).css("background-color", "#138D75");
-    console.log(idUsuario);
+    $(btn).text("Laborando").css("background-color", "#138D75");
+    var startTime = Date.now();
 
-    // Establecer startTime en el momento actual
-    startTime = Date.now();
-
-    if ($(btn).text("Laborando")) {
-      btn.textContent = "Laborando";
-      intervalo = setInterval(function () {
-        var currentTime = Date.now();
-        var tiempoTranscurrido = currentTime - startTime;
-        var horas = Math.floor(tiempoTranscurrido / 3600000);
-        var minutos = Math.floor(
-          (tiempoTranscurrido - horas * 3600000) / 60000
-        );
-        var segundos = Math.floor(
-          (tiempoTranscurrido - horas * 3600000 - minutos * 60000) / 1000
-        );
-        var tiempo = `${horas.toString().padStart(2, "0")}:${minutos
-          .toString()
-          .padStart(2, "0")}:${segundos.toString().padStart(2, "0")}`;
-        var cronometro = (document.getElementById(
+    if ($(btn).text() == "Laborando") {
+      var idUsuario = $(btn).data("id");
+      intervalos[idUsuario] = setInterval(function () {
+        var tiempo = new Date(Date.now() - startTime)
+          .toISOString()
+          .substr(11, 8);
+        var cronometro = document.getElementById(
           "iniciarCronometro_" + idUsuario
-        ).textContent = tiempo);
-
+        );
         if (cronometro) {
           cronometro.textContent = tiempo;
-          if (tiempoTranscurrido >= 600000) {
-            cronometro.style.color = "red";
-          }
+          cronometro.style.color = tiempo >= "00:10:00" ? "red" : "";
         }
       }, 1000);
-    }else {
-      btn.textContent = "Laborando";
-      document.getElementById("botonOn").style.backgroundColor = "#138D75";
-    }
-  } 
+    } 
+  } else if ($(btn).text() == "Laborando") {
+    $(btn).text("Disponible").css("background-color", "#3498DB");
+    var idUsuario = $(btn).data("id");
+    clearInterval(intervalos[idUsuario]);
+    delete intervalos[idUsuario]; // Eliminar el ID de intervalo para el ID de usuario especificado
+  }
 }
 
+function reiniciar(btn, idUsuario) {
+  clearInterval(intervalos[idUsuario]); // Detener la función de cronómetro correspondiente al ID de usuario especificado
+  delete intervalos[idUsuario]; // Eliminar el ID de intervalo para el ID de usuario especificado
+  // Resetear el cronómetro
+  var cronometro = document.getElementById("iniciarCronometro_" + idUsuario);
+  if (cronometro) {
+    cronometro.textContent = "00:00:00";
+    cronometro.style.color = "";
+  }
+}
