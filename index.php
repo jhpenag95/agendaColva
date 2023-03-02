@@ -59,7 +59,7 @@ $total_client = mysqli_num_rows($queryData);
               <li class="nav-item">
                 <a class="nav-link active" href="#">Inicio</a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" href="#">Servicios</a>
               </li>
               <li class="nav-item">
@@ -68,7 +68,7 @@ $total_client = mysqli_num_rows($queryData);
               <li class="nav-item">
                 <a class="nav-link" href="#">Contacto</a>
               </li>
-            </ul>
+            </ul> -->
           </div>
         </ul>
       </div>
